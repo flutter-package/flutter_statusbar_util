@@ -1,6 +1,6 @@
 name: statusbar_util
-description: A new flutter plugin project.
-version: 0.0.1
+description: A flutter plugin to set statusbar transparent support android 4.4+.
+version: 1.0.0
 author:
 homepage:
 

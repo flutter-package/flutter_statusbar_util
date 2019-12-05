@@ -1,5 +1,4 @@
-import 'dart:async';
-
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class StatusbarUtil {
@@ -8,7 +7,8 @@ class StatusbarUtil {
 
 
   static void setTranslucent() {
+    SystemUiOverlayStyle systemUiOverlayStyle = SystemUiOverlayStyle(statusBarColor: Colors.transparent);
+    SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
     _channel.invokeMethod('setTranslucent');
   }
-  
 }
