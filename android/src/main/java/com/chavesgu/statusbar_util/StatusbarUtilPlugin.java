@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.graphics.Color;
+import android.util.Log;
 
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
@@ -20,7 +21,7 @@ public class StatusbarUtilPlugin implements MethodCallHandler {
   private Activity activity;
   /** Plugin registration. */
   public static void registerWith(Registrar registrar) {
-    final MethodChannel channel = new MethodChannel(registrar.messenger(), "statusbar_util");
+    final MethodChannel channel = new MethodChannel(registrar.messenger(), "chavesgu/statusbar_util");
     channel.setMethodCallHandler(new StatusbarUtilPlugin(registrar.activity()));
   }
 
@@ -30,8 +31,12 @@ public class StatusbarUtilPlugin implements MethodCallHandler {
 
   @Override
   public void onMethodCall(MethodCall call, Result result) {
-    if (call.method.equals("setTranslucent")) {
+    if ("setTranslucent".equals(call.method)) {
       setTranslucentStatus(activity);
+      result.success(true);
+    } else if (call.method.equals("setStatusBarFont")) {
+      String style = call.argument("style");
+      setStatusBarStyle(activity, style);
       result.success(true);
     } else {
       result.notImplemented();
@@ -63,6 +68,22 @@ public class StatusbarUtilPlugin implements MethodCallHandler {
       //int flagTranslucentNavigation = WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION;
       //attributes.flags |= flagTranslucentNavigation;
       window.setAttributes(attributes);
+    }
+  }
+  // 设置状态栏字体颜色  黑 白
+  public static void setStatusBarStyle(Activity activity, String style) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//      activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+      View decorView = activity.getWindow().getDecorView();
+      int uiOptions = decorView.getSystemUiVisibility();
+      if (style.equals("black")) {
+        Log.w("style","black");
+        decorView.setSystemUiVisibility(uiOptions | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+      }
+      if (style.equals("white")) {
+        Log.w("style","white");
+        decorView.setSystemUiVisibility(uiOptions & ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+      }
     }
   }
 }

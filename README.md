@@ -14,9 +14,12 @@ dependencies:
 import 'package:statusbar_util/statusbar_util.dart';
 
 void main() {
-  if (Platform.isAndroid) { // transparent statusbar is default behavior in ios
-    StatusbarUtil.setTranslucent();
-  }
+  // setTranslucent
+  StatusbarUtil.setTranslucent();
+  
+  // setStatusBarFontStyle
+  StatusbarUtil.setStatusBarFont(FontStyle.black); // black text
+  StatusbarUtil.setStatusBarFont(FontStyle.white); // white text
   runApp(MyApp());
 }
 ```

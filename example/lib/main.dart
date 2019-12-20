@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:statusbar_util/statusbar_util.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   StatusbarUtil.setTranslucent();
   runApp(MyApp());
 }
@@ -31,8 +32,21 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: const Text('Plugin example app'),
         ),
-        body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+        body: Column(
+          children: <Widget>[
+            RaisedButton(
+              child: Text('black'),
+              onPressed: () {
+                StatusbarUtil.setStatusBarFont(FontStyle.black);
+              },
+            ),
+            RaisedButton(
+              child: Text('white'),
+              onPressed: () {
+                StatusbarUtil.setStatusBarFont(FontStyle.white);
+              },
+            ),
+          ],
         ),
       ),
     );

@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 
 class StatusbarUtil {
   static const MethodChannel _channel =
-      const MethodChannel('statusbar_util');
+      const MethodChannel('chavesgu/statusbar_util');
 
 
   static void setTranslucent() {
@@ -11,4 +11,19 @@ class StatusbarUtil {
     SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
     _channel.invokeMethod('setTranslucent');
   }
+
+  static void setStatusBarFont(FontStyle style) {
+    String _style = 'black';
+    if (style==FontStyle.white) {
+      _style = 'white';
+    }
+    _channel.invokeMethod('setStatusBarFont', <String, dynamic>{
+      "style": _style,
+    });
+  }
+}
+
+enum FontStyle {
+  black,
+  white,
 }
