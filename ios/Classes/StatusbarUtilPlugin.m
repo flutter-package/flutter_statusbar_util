@@ -1,4 +1,5 @@
 #import "StatusbarUtilPlugin.h"
+#import "UIViewController+StatusBarFix.m"
 
 @implementation StatusbarUtilPlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
@@ -22,6 +23,9 @@
               [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
           }
       }
+    } else if ([@"hideStatusBar" isEqualToString:call.method]) {
+      BOOL hide = call.arguments[@"hide"];
+      [[UIApplication sharedApplication] setStatusBarHidden:hide withAnimation:UIStatusBarAnimationFade];
     } else {
       result(@true);
     }
